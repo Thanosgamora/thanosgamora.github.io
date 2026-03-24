@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0e" />
+  <title>Bigesh Kunwar — Graphic + Motion Designer</title>
+
+  <!--
+  =======================
+  YOUR CURRENT PATHS
+  =======================
+  HERO PHOTO:
+    images/1.JPG  ✅ (already in your images folder)
+
+  WORK THUMBNAILS (put 3 images here, or rename yours to match):
+    images/work/01.jpg
+    images/work/02.jpg
+    images/work/03.jpg
+
+  BRAND LOGOS (put logos here, PNG preferred):
+    images/float/logo-01.png ... logo-10.png
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0b0e;
+      --fg:#f5f6f7;
+      --muted:rgba(245,246,247,.72);
+      --muted2:rgba(245,246,247,.52);
+      --line:rgba(255,255,255,.10);
+
+      --orange:#ff7a18;
+      --amber:#ffb703;
+      --pink:#ff4d6d;
+
+      --max:1180px;
+      --radius:22px;
+
+      --headline:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      --body:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--body);
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 900px at 18% -10%, rgba(255,122,24,.20), transparent 60%),
+        radial-gradient(900px 700px at 82% 10%, rgba(255,183,3,.12), transparent 55%),
+        radial-gradient(1000px 800px at 60% 120%, rgba(255,77,109,.10), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 22px}
+
+    /* ===== Top nav (minimal, breathable) ===== */
+    .top{
+      position:sticky;top:0;z-index:60;
+      backdrop-filter: blur(14px);
+      background: rgba(11,11,14,.55);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .top-inner{
+      height:76px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--headline);
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    .badge{
+      width:34px;height:34px;border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,183,3,.95), rgba(255,122,24,.85));
+      box-shadow: 0 0 26px rgba(255,122,24,.18);
+    }
+    .nav{
+      display:flex;align-items:center;gap:14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .nav a{
+      padding:10px 10px;border-radius:14px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--fg);
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 14px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-size:13px;color:var(--fg);
+      transition:.15s;white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.18)}
+    .btn.primary{
+      color:#0b0b0e;
+      border-color: rgba(0,0,0,.10);
+      background: linear-gradient(135deg, rgba(255,183,3,.98), rgba(255,122,24,.92), rgba(255,77,109,.68));
+      box-shadow: 0 18px 44px rgba(255,122,24,.16);
+    }
+
+    /* Mobile menu */
+    .menu{
+      display:none;
+      width:44px;height:44px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      align-items:center;justify-content:center;
+      cursor:pointer;
+    }
+    .menu span{width:20px;height:2px;background:var(--fg);border-radius:2px;display:block;position:relative}
+    .menu span::before,.menu span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--fg);border-radius:2px}
+    .menu span::before{top:-6px}
+    .menu span::after{top:6px}
+
+    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.60);opacity:0;pointer-events:none;transition:.2s;z-index:80}
+    .drawer{
+      position:fixed;top:0;right:0;height:100%;width:min(86vw,360px);
+      background: rgba(14,14,18,.92);
+      border-left:1px solid rgba(255,255,255,.10);
+      transform: translateX(100%);transition:.25s;
+      z-index:90;padding:88px 18px 18px;
+      backdrop-filter: blur(16px);
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .drawer a{
+      padding:12px 12px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    body.menu-open .backdrop{opacity:1;pointer-events:auto}
+    body.menu-open .drawer{transform:translateX(0)}
+
+    /* ===== Sections: breathable (less boxes) ===== */
+    section{padding:70px 0}
+    .kicker{
+      color: rgba(255,183,3,.92);
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:12px;
+      letter-spacing:.02em;
+    }
+    h1,h2,h3{font-family:var(--headline);letter-spacing:-.02em}
+    h1{margin:0;font-size:76px;line-height:.92}
+    h2{margin:0;font-size:26px}
+    p{margin:0;color:var(--muted);line-height:1.65}
+
+    /* ===== Hero: full image + gradient overlay (like inspo) ===== */
+    header{padding:22px 0 0}
+    .hero{
+      position:relative;
+      border-radius: calc(var(--radius) + 10px);
+      overflow:hidden;
+      min-height: 610px;
+      background:#000;
+      box-shadow: 0 40px 120px rgba(0,0,0,.65);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .hero-bg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: contrast(1.05) saturate(1.02);
+      transform: scale(1.02);
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,122,24,.90), rgba(255,122,24,.35) 35%, transparent 70%),
+        radial-gradient(circle at 84% 22%, rgba(255,77,109,.26), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.86));
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative; z-index:2;
+      padding:56px 52px 26px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:30px;
+      align-items:center;
+    }
+    .hero-right{
+      max-width: 420px;
+      justify-self:end;
+    }
+    .hero-right .bigline{
+      font-size:20px;
+      font-weight:700;
+      color: rgba(255,255,255,.92);
+      margin-bottom:10px;
+      font-family: var(--headline);
+    }
+    .hero-actions{
+      margin-top:22px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    /* Services row: keep subtle, not heavy cards */
+    .services-row{
+      position:relative; z-index:2;
+      padding: 14px 52px 34px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.12));
+      backdrop-filter: blur(8px);
+    }
+    .svc{
+      padding:14px 14px 16px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.14);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .svc .n{
+      color: rgba(255,183,3,.95);
+      font-weight:800;
+      font-family: var(--headline);
+      font-size:12px;
+      margin-bottom:10px;
+      display:inline-block;
+    }
+    .svc b{display:block;font-size:14px;margin-bottom:6px}
+    .svc span{display:block;color:rgba(255,255,255,.70);font-size:12.5px;line-height:1.45}
+
+    /* Trusted brands: chips but light */
+    .brands{
+      margin-top:18px;
+      padding:16px 0 8px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .brands-head{
+      display:flex; align-items:center; justify-content:space-between;
+      color: rgba(255,255,255,.62);
+      font-size:12.5px;
+      padding: 0 2px 12px;
+    }
+    .track-wrap{
+      overflow:hidden;
+      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    }
+    .track{
+      display:flex; align-items:center; gap:16px;
+      width:max-content;
+      animation: scroll 18s linear infinite;
+      padding: 0 2px 12px;
+    }
+    @keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .logo-chip{
+      height:44px;
+      display:flex; align-items:center; justify-content:center;
+      padding:10px 16px;
+      border-radius:999px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .logo-chip img{
+      max-height:22px;
+      max-width:120px;
+      opacity:.92;
+      filter: grayscale(1) brightness(1.1);
+    }
+
+    /* Two-column “behind the designs” — breathable */
+    .split{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:26px;
+      align-items:start;
+    }
+    .big-copy{
+      font-size:54px;
+      line-height:1.02;
+      margin:0;
+    }
+    .soft-panel{
+      padding:26px 26px 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .soft-panel h3{margin:0 0 10px; font-size:18px}
+    .soft-panel p{margin:0 0 16px}
+
+    /* Projects: less “cardy”, more image-first */
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:18px;
+      margin-bottom:18px;
+    }
+    .section-head p{max-width:520px}
+
+    .work-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:18px;
+    }
+    .project{
+      position:relative;
+      border-radius: 24px;
+      overflow:hidden;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow: 0 26px 80px rgba(0,0,0,.50);
+      transform: translateY(0);
+      transition: .18s;
+    }
+    .project:hover{transform: translateY(-4px)}
+    .project .thumb{
+      height:260px;
+      background:#000;
+    }
+    #projects{
+  margin-bottom: 40px;
+}
+    .project img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+      filter: saturate(1.02) contrast(1.02);
+    }
+    .project .meta{
+      padding:14px 16px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .project b{font-family:var(--headline); font-size:16px}
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,122,24,.14);
+      border:1px solid rgba(255,122,24,.34);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* Contact: only one clean panel */
+    .contact{
+      padding:26px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      flex-wrap:wrap;
+    }
+    .contact b{font-family:var(--headline);font-size:18px}
+    .contact small{display:block;color:var(--muted2);margin-top:6px}
+
+    footer{
+      padding:18px 0 44px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted2);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.in{opacity:1;transform:none}
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1;transform:none;transition:none}
+      .track{animation:none}
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .nav{display:none}
+      .menu{display:inline-flex}
+      .hero-inner{grid-template-columns:1fr; padding:42px 18px 18px}
+      h1{font-size:56px}
+      .hero-right{justify-self:start;max-width:unset}
+      .services-row{grid-template-columns:1fr 1fr; padding:14px 18px 18px}
+      .split{grid-template-columns:1fr}
+      .big-copy{font-size:40px}
+      .work-grid{grid-template-columns:1fr}
+      section{padding:56px 0}
+    }
+    @media (max-width:520px){
+      h1{font-size:48px}
+    }
+    .logo-img{
+  width:32px;
+  height:32px;
+  object-fit:contain;
+  display:block;
+}
+.ig-shell{
+  display:grid;
+  grid-template-columns: minmax(320px, 520px) 1fr;
+  gap: clamp(18px, 3vw, 34px);
+  align-items: start;
+}
+
+@media (max-width: 980px){
+  .ig-shell{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 980px){
+  .ig-shell{ grid-template-columns: 1fr; }
+}
+.section-head{
+  align-items: baseline;
+  margin-top: 14px;
+
+
+}
+
+.section-head p{
+  margin-top: 40px;
+  margin-left: auto;
+  text-align: right;
+  max-width: 56ch;
+}
+
+@media (max-width: 980px){
+  .section-head{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .section-head p{
+    text-align: left;
+  }
+}
+.ig-card{
+  min-height: 190px;
+}
+.ig-grid{
+  gap: 14px;
+}
+#instagram{
+  margin-bottom: 4px;
+}
+
+#contact{
+  padding-top: 24px;
+}
+.contact-shell{
+  align-items: center;
+}
+
+.contact-actions{
+  justify-content: flex-start;
+}
+.ig-left{
+  padding: 6px 0;
+}
+/* Hard cap for wide sections */
+#instagram, #contact{
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* If your main wrapper is wider, this will still keep these sections tight */
+.contact-shell{
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* one width system for both sections */
+#instagram, #contact{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+/* ensure the email card doesn't stretch wider than the section */
+#contact .contact-shell{
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+/* remove unwanted divider line under the contact box */
+#contact .contact-shell{
+  border-bottom: none !important;
+  border-top: none !important;
+  box-shadow: none; /* only if the line is from shadow */
+}
+
+/* if the line is a pseudo divider */
+#contact .contact-shell::after,
+#contact .contact-shell::before{
+  content: none !important;
+  display: none !important;
+}
+#contact{
+  padding-bottom: 36px;
+}
+
+#contact .contact-shell{
+  margin-bottom: 24px;
+}
+
+.ig-title{
+  margin: 0 0 8px;
+  font-family: "Urbanist", system-ui;
+  font-weight: 900;
+  letter-spacing: -.6px;
+  font-size: clamp(22px, 2.4vw, 30px);
+}
+
+.ig-sub{
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+.ig-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ig-card{
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  min-height: 190px;
+  background:
+    var(--thumb) center/cover no-repeat;
+}
+
+/* 20% gradient overlay (like your placeholder) */
+.ig-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.22) 0%,
+    rgba(0,0,0,.18) 35%,
+    rgba(0,0,0,.55) 100%
+  );
+  pointer-events:none;
+}
+
+/* badge stays on top */
+.ig-badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  z-index:2;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.16);
+  color: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px);
+}
+
+/* center text stays visible (optional) */
+.ig-center{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:2;
+  color: rgba(255,255,255,.78);
+  font-weight: 800;
+  text-shadow: 0 10px 30px rgba(0,0,0,.6);
+}
+.ig-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+.ig-thumb{ display:none; } /* if you still have the old text div */
+.ig-thumb-img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.ig-card{
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  min-height: 160px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  transition: transform .18s ease, border-color .2s ease, background .2s ease;
+}
+
+html[data-theme="light"] .ig-card{
+  background: rgba(255,255,255,.75);
+}
+
+.ig-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.18);
+}
+
+html[data-theme="light"] .ig-card:hover{
+  border-color: rgba(0,0,0,.18);
+}
+
+.ig-badge{
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.90);
+  backdrop-filter: blur(10px);
+}
+
+html[data-theme="light"] .ig-badge{
+  background: rgba(255,255,255,.70);
+  color: rgba(22,22,27,.85);
+  border: 1px solid rgba(0,0,0,.10);
+}
+
+.ig-thumb{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  color: var(--muted);
+  font-weight: 700;
+  background:
+    radial-gradient(700px 240px at 30% 20%, rgba(255,122,24,.25), transparent 60%),
+    linear-gradient(135deg, rgba(0,0,0,.20), rgba(0,0,0,.60));
+}
+
+html[data-theme="light"] .ig-thumb{
+  background:
+    radial-gradient(700px 240px at 30% 20%, rgba(255,122,24,.25), transparent 60%),
+    linear-gradient(135deg, rgba(255,255,255,.70), rgba(255,247,240,.60));
+}
+  </style>
+</head>
+
+<body>
+  <div class="backdrop" id="backdrop"></div>
+  <aside class="drawer" id="drawer" aria-label="Mobile menu">
+    <a href="#top">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+    <a class="btn primary" href="mailto:bigeshkunwar7@gmail.com?subject=Project%20Inquiry%20—%20Bigesh%20Kunwar">Get in touch →</a>
+  </aside>
+
+  <div class="top">
+    <div class="container">
+      <div class="top-inner">
+        <a class="brand" href="#top" aria-label="Home">
+<img src="images/logo.png" alt="Bigesh logo" class="logo-img">          <span>BIGESH KUNWAR</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a class="btn primary" href="mailto:bigeshkunwar7@gmail.com?subject=Project%20Inquiry%20—%20Bigesh%20Kunwar">Get in touch →</a>
+        </nav>
+
+        <button class="menu" id="openMenu" type="button" aria-label="Open menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <header id="top" class="container">
+    <div class="hero reveal">
+      <!-- ✅ Uses your existing images folder -->
+      <img class="hero-bg" src="images/1.JPG" alt="Bigesh Kunwar portrait" loading="eager" fetchpriority="high" />
+
+      <div class="hero-inner">
+        <div>
+          <div class="kicker" style="color:rgba(255,255,255,.88)">Hey, I’m a</div>
+          <h1>Graphic +<br/>Motion Designer</h1>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="mailto:bigeshkunwar7@gmail.com?subject=Project%20Inquiry%20—%20Bigesh%20Kunwar">Get in touch →</a>
+            <a class="btn" href="https://www.behance.net/bigeshkunwar1" target="_blank" rel="noopener">Behance ↗</a>
+            <a class="btn" href="https://wa.me/9779846868607" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="bigline">Great design should feel invisible.</div>
+          <p>
+            I am a visual designer specializing in branding, campaign design, and motion content for digital platforms. I focus on clean typography, strong visual structure, and meaningful design systems that help brands communicate clearly. I enjoy working on marketing campaigns, social media visuals, and short-form motion content that connects with audiences quickly.
+          </p>
+        </div>
+      </div>
+
+      <div class="services-row">
+        <div class="svc"><span class="n">01</span><b>Social Media Designs</b><span>Campaign posts, carousels, reels covers.</span></div>
+        <div class="svc"><span class="n">02</span><b>Motion Designs</b><span>Promos, kinetic type, short-form ads.</span></div>
+        <div class="svc"><span class="n">03</span><b>Logos</b><span>Marks, identity systems, brand kits.</span></div>
+        <div class="svc"><span class="n">04</span><b>Presentation</b><span>Deck design, layout, storytelling.</span></div>
+      </div>
+    </div>
+
+    <div class="brands reveal">
+      <div class="brands-head">
+        <span>Trusted by brands I’ve helped shape</span>
+        <span style="opacity:.6">Add yours today 😉</span>
+      </div>
+
+      <div class="track-wrap">
+        <div class="track" id="brandTrack">
+          <!-- Put your brand logos here -->
+          <div class="logo-chip"><img src="images/float/logo-01.png" alt="Brand logo 01" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-02.png" alt="Brand logo 02" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-03.png" alt="Brand logo 03" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-04.png" alt="Brand logo 04" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-05.png" alt="Brand logo 05" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-06.png" alt="Brand logo 06" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-07.png" alt="Brand logo 07" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-08.png" alt="Brand logo 08" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-09.png" alt="Brand logo 09" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-10.png" alt="Brand logo 10" loading="lazy"></div>
+
+          <!-- duplicate for seamless loop -->
+          <div class="logo-chip"><img src="images/float/logo-01.png" alt="Brand logo 01 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-02.png" alt="Brand logo 02 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-03.png" alt="Brand logo 03 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-04.png" alt="Brand logo 04 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-05.png" alt="Brand logo 05 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-06.png" alt="Brand logo 06 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-07.png" alt="Brand logo 07 duplicate" loading="lazy"></div>
+          <div class="logo-chip"><img src="images/float/logo-08.png" alt="Brand logo 08 duplicate" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="container">
+    <div class="split reveal">
+      <div>
+        <div class="kicker">Behind the Designs</div>
+        <h2 class="big-copy">Shaping experiences that make brands feel consistent.</h2>
+      </div>
+
+      <div class="soft-panel">
+        <h3>I’m a designer focused on clean systems + fast execution.</h3>
+        <p>
+          I have been working as a freelance designer since 2019, collaborating with different brands and marketing teams to create consistent and high-quality visual content for digital platforms.
+        </p>
+        <a class="btn primary" href="mailto:bigeshkunwar7@gmail.com?subject=Project%20Inquiry%20—%20Bigesh%20Kunwar">Get in touch →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="projects">
+    <div class="section-head reveal">
+      <div>
+        <h2>Projects</h2>
+      </div>
+      <a class="btn" href="https://www.behance.net/bigeshkunwar1" target="_blank" rel="noopener">View all ↗</a>
+    </div>
+
+    <div class="work-grid">
+      <a class="project reveal" href="https://www.behance.net/gallery/213887221/1311-Sale-Campaign-Jeevee-2-more-than-1111" target="_blank" rel="noopener">
+        <div class="thumb"><img src="images/work/01.jpg" alt="Project 01 thumbnail" loading="lazy"></div>
+        <div class="meta">
+          <b>1311 Sale Campaign | Jeevee |</b>
+          <span class="chip">Open</span>
+        </div>
+      </a>
+
+      <a class="project reveal" href="https://www.behance.net/gallery/190839721/Social-Media-Designs" target="_blank" rel="noopener">
+        <div class="thumb"><img src="images/work/02.jpg" alt="Project 02 thumbnail" loading="lazy"></div>
+        <div class="meta">
+          <b>Social Media Designs</b>
+          <span class="chip">Open</span>
+        </div>
+      </a>
+
+      <a class="project reveal" href="https://www.behance.net/gallery/228151925/Motion-graphics-for-various-Campaigns" target="_blank" rel="noopener">
+        <div class="thumb"><img src="images/work/03.jpg" alt="Project 03 thumbnail" loading="lazy"></div>
+        <div class="meta">
+          <b>Motion Graphics for Various Campaigns</b>
+          <span class="chip">Open</span>
+        </div>
+      </a>
+    </div>
+  </section>
+<section id="instagram" class="reveal">
+  <div class="section-head">
+    <h2>Instagram</h2>
+    <p>Short-form edits, motion snippets, and content experiments.</p>
+  </div>
+
+  <div class="ig-shell">
+    <div class="ig-left">
+      <h3 class="ig-title">Watch my latest work on Instagram</h3>
+      <p class="ig-sub">
+        I post reels, motion tests, and design content — behind-the-scenes + finished outputs.
+      </p>
+
+      <div class="ig-actions">
+        <a class="btn primary" href="https://www.instagram.com/bigesh101/" target="_blank" rel="noopener">Open Instagram →</a>
+        <a class="btn" href="https://www.tiktok.com/@biges80085" target="_blank" rel="noopener">View Tiktok</a>
+      </div>
+    </div>
+
+    <div class="ig-right">
+      <!-- Option A (recommended): simple preview grid with placeholders -->
+      <div class="ig-grid">
+        <!-- Replace the href links later with specific reel/post links -->
+        <a class="ig-card" href="https://www.instagram.com/reel/DR94LZnjQgJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+          <div class="ig-badge">Film</div>
+<img class="ig-thumb-img" src="images/ig1.jpg" alt="Instagram reel thumbnail 01" loading="lazy">        </a>
+
+        <a class="ig-card" href="https://www.instagram.com/reel/DNk8hMVBoUf/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+          <div class="ig-badge">Sick</div>
+          <img class="ig-thumb-img" src="images/ig2.jpg" alt="Instagram reel thumbnail 01" loading="lazy">   
+          <div class="ig-thumb">Add thumbnail 02</div>
+        </a>
+
+        <a class="ig-card" href="https://www.instagram.com/reel/DS7XdMJDeVY/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+          <div class="ig-badge">A day</div>
+                    <img class="ig-thumb-img" src="images/ig3.jpg" alt="Instagram reel thumbnail 01" loading="lazy">   
+
+          <div class="ig-thumb">Add thumbnail 03</div>
+        </a>
+
+        <a class="ig-card" href="https://www.instagram.com/reel/DOGGyoqgbjm/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">
+          <div class="ig-badge">Sick 2</div>
+                              <img class="ig-thumb-img" src="images/ig4.jpg" alt="Instagram reel thumbnail 01" loading="lazy">   
+
+          <div class="ig-thumb">Add thumbnail 04</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="container" id="contact">
+    <div class="contact reveal">
+      <div>
+        <b>Email me to start a project.</b>
+        <small>Quick replies on WhatsApp: +977-9846868607</small>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn primary" href="mailto:bigeshkunwar7@gmail.com?subject=Project%20Inquiry%20—%20Bigesh%20Kunwar">Email me →</a>
+        <a class="btn" href="https://wa.me/9779846868607" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn" href="https://www.behance.net/bigeshkunwar1" target="_blank" rel="noopener">Behance ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <footer>
+      <div>© <span id="year"></span> Bigesh Kunwar</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <a href="https://www.behance.net/bigeshkunwar1" target="_blank" rel="noopener">Behance</a>
+        <span style="opacity:.35">•</span>
+        <a href="mailto:bigeshkunwar7@gmail.com">Email</a>
+        <span style="opacity:.35">•</span>
+        <a href="https://wa.me/9779846868607" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const openMenu = document.getElementById("openMenu");
+    const backdrop = document.getElementById("backdrop");
+    const drawer = document.getElementById("drawer");
+    const close = () => document.body.classList.remove("menu-open");
+    openMenu?.addEventListener("click", () => document.body.classList.add("menu-open"));
+    backdrop?.addEventListener("click", close);
+    drawer?.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
+
+    // Reveal on scroll
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add("in");
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+
+    // Smooth logo marquee (if short, duplicate)
+    const track = document.getElementById("brandTrack");
+    if(track && track.scrollWidth < window.innerWidth * 2){
+      track.innerHTML += track.innerHTML;
+    }
+  </script>
+</body>
+</html>
